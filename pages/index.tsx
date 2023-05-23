@@ -17,7 +17,7 @@ import { DefaultSession } from 'next-auth';
 
 interface Session {
   user: {
-    avatar: string | undefined | null;
+    avatar?: string;
   } & DefaultSession['user'];
 }
 
@@ -74,7 +74,7 @@ export default function Component() {
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={String(session.user?.email)}
-                    src={String(user?.avatar)}
+                    src={user?.avatar}
                   />
                 </IconButton>
                 <Menu
@@ -93,6 +93,9 @@ export default function Component() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography>{user?.email}</Typography>
+                  </MenuItem>
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" onClick={() => signOut()}>
                       Logout
